@@ -8,24 +8,16 @@
     <%= javascript_include_tag "application" %>
     <%= csrf_meta_tags %>
   </head>
-  <body>
-    <%# application layout styled for Twitter Bootstrap 2.3 %>
-    <header>
-      <%= render 'layouts/navigation' %>
-    </header>
-    <main role="main">
+  <body class="<%= "home" if params[:action] == 'index'%>">
+    <div id="wrap">
       <div class="container">
-        <div class="content">
-           <div class="row">
-            <div class="span12">
-              <%= render 'layouts/messages' %>
-              <%= yield %>
-            </div>
-          </div>
-          <footer>
-          </footer>
-        </div>
+        <%= yield %>
       </div>
-    </main>
+    </div>    
+    <div id="footer">
+      <div class="container">
+        <a href="<%=root_path%>">PWCkr <i class="icon-camera-retro"></i></a> 
+      </div>
+    </div>
   </body>
 </html>

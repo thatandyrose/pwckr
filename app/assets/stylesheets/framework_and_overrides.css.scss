@@ -1,3 +1,21 @@
 // import the CSS framework
 @import "bootstrap";
 @import "font-awesome";
+
+#footer{
+  padding: 20px
+}
+.brand{
+  font-size: 1.5em;
+  color:#000000;
+  font-weight: bold;
+}
+
+.jumbotron{
+  background-color: #ffffff;
+}
+
+.query{
+  font-weight: bold;
+  text-align: center;
+}

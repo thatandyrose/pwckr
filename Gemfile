@@ -7,11 +7,13 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
   gem "font-awesome-rails"
 end
+
 gem 'jquery-rails'
 gem 'bootstrap-sass', '>= 3.0.0.0'
 gem 'figaro'
 gem 'pg'
 gem 'thin'
+gem 'flickraw'
 
 group :development do
   gem 'hub', :require=>nil
@@ -31,4 +33,6 @@ group :test do
   gem 'capybara'
   gem 'database_cleaner', '1.0.1'
   gem 'email_spec'
+  gem 'selenium-webdriver'
+  gem 'spork', '~> 0.9.2'
 end

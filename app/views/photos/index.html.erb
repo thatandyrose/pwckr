@@ -1,7 +1,9 @@
-<div class="row-fluid">
-  <div class="centering text-center">
-    <%= form_tag(search_path) do%>
-      <%= text_field_tag :query,'',class:'query' %>
+<div class="jumbotron text-center">
+  <div class="container">
+    <%= form_tag(search_path,method:'get',class:'photo-search') do%>
+      <h1><i class="fa fa-camera-retro"></i></h1>
+      <%= text_field_tag :query,'',class:'query',placeholder:'type here to search' %>
+      <%= submit_tag 'GO', class:'btn btn-default btn-lg', style:'display:none;' %>
     <%end%>
-  </div>
+  </div>  
 </div>

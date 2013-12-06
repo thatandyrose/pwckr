@@ -56,7 +56,7 @@ class Photo
   def self.extract_urls(flickr_get_sizes_response)
     sizes = flickr_get_sizes_response
     {
-      thumbnail:sizes.select{|s|s['label'].downcase == 'square'}[0]['source'],
+      thumbnail:sizes.select{|s|s['label'].downcase == 'large square'}[0]['source'],
       fullsize:sizes.sort_by{|s| -s['width'].to_i}[0]['source']
     }
   end

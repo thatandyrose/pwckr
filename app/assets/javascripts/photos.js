@@ -14,7 +14,7 @@ var homeSearchForm = (function(){
 })();
 
 var photoPager = (function(){
-  var batch_size = 1;
+  var batch_size = 3;
   var calls;
   var url;
   var page_size;

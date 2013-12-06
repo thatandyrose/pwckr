@@ -1,0 +1,3 @@
+var loadMoreContainer = $('#photos .load-more-container').detach();
+$('#photos').append("<%= escape_javascript(render('list_items', {photos:@photos}))%>");
+$('#photos').append(loadMoreContainer);

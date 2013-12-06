@@ -20,16 +20,26 @@ describe 'photos' do
 
     it 'fills out basic info' do
       photo = Photo.text_search('kittens',1,1).first
-      expect(photo.title).not_to be_empty
-      expect(photo.id).not_to be_empty
+      
+      expect(photo.id.to_s).not_to be_empty
+      expect(photo.info.keys.length).to eq(4)
+      expect(photo.info[:title]).to_not be_empty
+      expect(photo.info[:description]).to_not be_empty
     end
 
-    it 'fill out tags and sizes' do
+    it 'fills out tags' do
       photo = Photo.text_search('kittens',1,1).first
+      
+      expect(photo.info[:tags].length).to be > 0
+      expect(photo.info[:tags]).to_not include('',nil)
+    end
 
-      expect(photo.thumbnail).not_to be_empty
-      expect(photo.fullsize).not_to be_empty
-      expect(photo.tags.length).to be > 0
+    it 'fills out urls' do
+      photo = Photo.text_search('kittens',1,1).first
+      
+      expect(photo.urls.length).to be > 0
+      expect(photo.urls[:thumbnail]).to_not be_empty
+      expect(photo.urls[:fullsize]).to_not be_empty
     end
 
   end

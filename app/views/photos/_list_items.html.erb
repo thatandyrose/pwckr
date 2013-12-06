@@ -1,0 +1,5 @@
+<% photos.each do |photo| %>
+  <div class="photo-box">
+    <img src="<%=photo.urls[:thumbnail]%>" alt="flickr-photo" data-id="<%=photo.id%>"/>
+  </div>
+<%end%>

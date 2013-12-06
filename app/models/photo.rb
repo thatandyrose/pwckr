@@ -1,46 +1,75 @@
 class Photo
-  @@flickr = nil
-  attr_accessor :thumbnail, :fullsize, :tags, :title, :id
+  attr_accessor :id,:info,:urls
   
-  def self.text_search(query,page = 1,page_size = 20)
+  def info
+    #lazy loading
+    if !@info
+      self.info = Photo.extract_info(FLICKR_API.photos.getInfo(photo_id:self.id))
+    end
+    @info
+  end
+
+  def urls
+    #lazy loading
+    if !@urls
+      self.urls = Photo.extract_urls(FLICKR_API.photos.getSizes(photo_id:self.id))
+    end
+    @urls
+  end
+
+  def self.text_search(query,page = 1,page_size = 20) 
+    ids = FLICKR_API.photos.search(text:query,page:page,per_page:page_size).map{|r|r.id}
     
-    photos = initiate_from_basic_info(flickr_api.photos.search(text:query,page:page,per_page:page_size))
-    photos = fill_tags(photos)
-    photos = fill_sizes(photos)
-    photos
+    ids.map{|i| Photo.find(i,{with_info:false,with_urls:true})}
   end
 
-  def self.initiate_from_basic_info(basic_info_collection)
-    basic_info_collection.map do |bi|
-      p = Photo.new
-      p.title = bi['title']
-      p.id = bi['id']
-      p
+  def self.find(photo_id,options = {with_info:true,with_urls:true})
+    p = Photo.new
+    p.id = photo_id.to_i
+
+    if options[:with_info]
+      #eager loading
+      info = FLICKR_API.photos.getInfo(photo_id:photo_id)
+      p.info = extract_info(info)
     end
+
+    if options[:with_urls]
+      #eager loading
+      sizes = FLICKR_API.photos.getSizes(photo_id:photo_id)
+      p.urls = extract_urls(sizes)
+    end
+
+    p
   end
 
-  def self.fill_tags(photos)
-    photos.each do |p|
-      p.tags = flickr_api.photos.getInfo(photo_id:p.id).tags.map{|t|t['raw'].strip}
-    end
-    photos
+  private
+
+  def self.extract_info(flickr_get_info_response)
+    {
+      tags:extract_tags(flickr_get_info_response),
+      author:extract_author(flickr_get_info_response),
+      title:flickr_get_info_response.title,
+      description:flickr_get_info_response.description
+    }
   end
 
-  def self.fill_sizes(photos)
-    photos.each do |p|
-      sizes = flickr_api.photos.getSizes(photo_id:p.id)
-      p.thumbnail = sizes.select{|s|s['label'].downcase == 'square'}[0]['source']
-      p.fullsize = sizes.sort_by{|s| -s['width'].to_i}[0]['source']
-    end
-    photos
+  def self.extract_urls(flickr_get_sizes_response)
+    sizes = flickr_get_sizes_response
+    {
+      thumbnail:sizes.select{|s|s['label'].downcase == 'square'}[0]['source'],
+      fullsize:sizes.sort_by{|s| -s['width'].to_i}[0]['source']
+    }
   end
 
-  def self.flickr_api
-    if !@@flickr
-      FlickRaw.api_key=FLICKR[:key]
-      FlickRaw.shared_secret=FLICKR[:secret]
-      @@flickr = flickr
-    end
-    @@flickr
+  def self.extract_tags(flickr_get_info_response)
+    flickr_get_info_response.tags.map{|t|t['raw'].strip}
+  end
+  
+  def self.extract_author(flickr_get_info_response)
+    owner = flickr_get_info_response['owner']
+    {
+      name:owner['realname'],
+      url:"http://www.flickr.com/photos/#{owner['username']}"
+    }
   end
 end

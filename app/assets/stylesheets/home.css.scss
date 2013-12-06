@@ -1,14 +1,9 @@
 .home{
   .query{
-    width:100%;
-    border:none;
-    outline: none;
-    border:none !important;
-    box-shadow:none !important;
     margin-top:20px;
     margin-bottom:20px;
   }
-  .btn{
-    font-weight: bold;
+  .photo-search .btn{
+    display: none;
   }
 }

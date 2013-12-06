@@ -7,15 +7,16 @@
 }
 .brand{
   font-size: 1.5em;
-  color:#000000;
   font-weight: bold;
+  color:#000000; 
 }
 
 .jumbotron{
   background-color: #ffffff;
 }
 
-.query{
-  font-weight: bold;
-  text-align: center;
+.jumbotron-thin{
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-bottom:0;
 }

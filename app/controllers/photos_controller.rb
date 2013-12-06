@@ -11,6 +11,10 @@ class PhotosController < ApplicationController
     else
       @photos = []
     end
+
+    if params[:id]
+      @photo = Photo.find(params[:id])
+    end
     
     respond_to do |format|
       format.html

@@ -1,5 +1,7 @@
 <% photos.each do |photo| %>
   <div class="photo-box">
-    <img src="<%=photo.urls[:thumbnail]%>" alt="flickr-photo" data-id="<%=photo.id%>"/>
+    <a href="<%=list_path(query:@query,do_search:false,id:photo.id)%>">
+      <img src="<%=photo.urls[:thumbnail]%>" alt="flickr-photo" data-id="<%=photo.id%>"/>
+    </a>
   </div>
 <%end%>

@@ -1,6 +1,6 @@
 var homeSearchForm = (function(){
   var init = function(){
-    $('.home .query').focus(function(){
+    $('.query').focus(function(){
       $('form.photo-search .btn').fadeIn('slow');
     });
   };

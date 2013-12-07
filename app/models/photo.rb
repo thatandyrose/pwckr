@@ -18,7 +18,7 @@ class Photo
   end
 
   def self.text_search(query,page = 1,page_size = 20) 
-    ids = FLICKR_API.photos.search(text:query,page:page,per_page:page_size).map{|r|r.id}
+    ids = FLICKR_API.photos.search(text:query,page:page,per_page:page_size).map{|r|r['id']}
     
     ids.map{|i| Photo.find(i,{with_info:false,with_urls:true})}
   end
@@ -48,8 +48,8 @@ class Photo
     {
       tags:extract_tags(flickr_get_info_response),
       author:extract_author(flickr_get_info_response),
-      title:flickr_get_info_response.title,
-      description:flickr_get_info_response.description
+      title:flickr_get_info_response['title'],
+      description:flickr_get_info_response['description']
     }
   end
 
@@ -62,7 +62,7 @@ class Photo
   end
 
   def self.extract_tags(flickr_get_info_response)
-    flickr_get_info_response.tags.map{|t|t['raw'].strip}
+    flickr_get_info_response['tags'].map{|t|t['raw'].strip}
   end
   
   def self.extract_author(flickr_get_info_response)

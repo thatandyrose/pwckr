@@ -14,6 +14,7 @@ gem 'figaro'
 gem 'pg'
 gem 'thin'
 gem 'flickraw'
+gem 'kaminari'
 
 group :development do
   gem 'hub', :require=>nil

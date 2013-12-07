@@ -1,3 +1,15 @@
+<%
+  if @photo
+    page_title = @photo.info[:title]
+    page_description = @photo.info[:description]
+  else
+    page_title = "#{@query} photos"
+    page_description = "Photos for search query #{@query}"
+  end
+%>
+<%= content_for(:title){page_title}%>
+<%= content_for(:description){page_description}%>
+
 <div class="jumbotron jumbotron-thin text-center">
   <div class="container">
     <%= render 'search_form', form_class:'form-inline'%>

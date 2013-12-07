@@ -1,8 +1,9 @@
 require 'spec_helper'
 
 describe 'photos' do
-  context 'text searching' do
-
+  context 'text searching with flickr API' do
+    #this test actively tests agaisnt the flickr live api
+    
     it 'returns the correct number of results' do
       photos = Photo.text_search('kittens',1,5)
       expect(photos.length).to eq(5)

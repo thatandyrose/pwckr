@@ -72,7 +72,7 @@ var photoPager = (function(){
         }
       },
       error:function(err){
-        status.html(" | ERROR <i class='fa fa-bolt'></i> : could not load photos <em>:-(</em>");
+        statusEl.html(" | ERROR <i class='fa fa-bolt'></i> : could not load photos <em>:-(</em>");
       }
     });
   };

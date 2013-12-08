@@ -5,7 +5,7 @@
     <div class="photo-tags">
       <ul class="list-inline">          
         <%photo.info[:tags].each do |t| %>
-          <li><a href="<%=list_path(query:t,do_search:false)%>">#<%=t%></a></li>
+          <li><a class="photo-tag" href="<%=list_path(query:t,do_search:false)%>">#<%=t%></a></li>
         <%end%>
       </ul>
     </div>

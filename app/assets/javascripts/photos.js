@@ -14,7 +14,7 @@ var homeSearchForm = (function(){
 })();
 
 var photoPager = (function(){
-  var batch_size = 3;
+  var batch_size;
   var calls;
   var url;
   var page_size;
@@ -23,16 +23,19 @@ var photoPager = (function(){
   var call_counter;
   var statusEl;
   var loadMoreEl;
+  var returnedCount;
 
   var init = function(options){
+    batch_size = 3;
     url = options.url;
     page_size = options.page_size;
     query = options.query;
     calls = Math.ceil(page_size/batch_size);
-    call_counter = 0;
 
     statusEl = $('#sync-status');
     loadMoreEl = $('#load-more');
+
+    returnedCount = 0;
 
     attacheLoadMoreHandler();
   };
@@ -44,16 +47,27 @@ var photoPager = (function(){
   };
 
   var loadPage = function(page){
+    var body = $('body');
+    body.removeClass('page-done');
+    body.addClass('page-loading');
+    
     loadMoreEl.hide();
     statusEl.show();
     statusEl.html(" | loading photos <i class='fa fa-cogs'></i>");
     
+    
+    call_counter = 0;
     getPhotos(page,batch_size);
       
   };
 
   var pageDone = function(){
     call_counter = 0;
+    
+    var body = $('body');
+    body.removeClass('page-loading');
+    body.addClass('page-done');
+    
     statusEl.fadeOut('slow');
     loadMoreEl.fadeIn('slow');
   };

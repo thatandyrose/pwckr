@@ -24,7 +24,11 @@ I'm glad you asked.
 
 View a photo and then click on the tags and discover... more photos. Great.
 
-### 3. Tests With Delicious Mocking
+### 3. Mutually Excluisve tag searching for better results...?
+
+At the last minute I decided to change the searching stratgey to :tags and tags_mode:'all' for more relevant results. Also my tests expect tags so ;-)
+
+### 4. Tests With Delicious Mocking
   allow(ANY_CLASS).to receive(:get_todays_quote){"fuck yeah"}
 
 #### Model Tests
@@ -35,7 +39,7 @@ The model completely wraps the api so that no other code touches the api.
 #### Feature Tests with Mocking
 The feature tests test the overall app behaviour and the app UI using a Flickr API mock class (since the real api is tested in our model test)
 
-### 4. Async AND Control The Batch Size Of Your Javascript Calls!
+### 5. Async AND Control The Batch Size Of Your Javascript Calls!
 
 The Flickr API is quite chatty. To avoid "locking the UI thread" most chatty calls are made asycnhrounously.
 
@@ -44,11 +48,11 @@ A compromise of delivery time (shipping this) and peformance (there's no caching
 (check out line 29: https://github.com/thatandyrose/pwckr/blob/master/app/assets/javascripts/photos.js#L29)
 ![line 29](https://www.dropbox.com/s/uoiockd38zdht3n/line29.png?dl=1)
 
-### 5. PWCkr is Continuously Integrated and Released!
+### 6. PWCkr is Continuously Integrated and Released!
 
 ![circleci status](https://circleci.com/gh/thatandyrose/pwckr/tree/master.png?circle-token=48f3b3e3bb4ca4d1094c39e7b7fb5a87166e4244)
 
-### 6. Other Fun Facts
+### 7. Other Fun Facts
 
 1. PWCkr runs on rails 3 and ruby (tuesday) 2
 2. PWCkr tests use rspec + capybara with :selenium for the js:true tests.

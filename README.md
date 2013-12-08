@@ -26,7 +26,7 @@ View a photo and then click on the tags and discover... more photos. Great.
 
 ### 3. Mutually Excluisve tag searching for better results...?
 
-At the last minute I decided to change the searching stratgey to :tags and tags_mode:'all' for more relevant results. Also my tests expect tags so ;-)
+At the last minute I decided to change the searching stratgey to :tags and tags_mode:'all' for more relevant results. Also my tests expect tags so ;-) No entirely convinced about this...
 
 ### 4. Tests With Delicious Mocking
   allow(ANY_CLASS).to receive(:get_todays_quote){"fuck yeah"}

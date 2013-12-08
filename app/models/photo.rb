@@ -29,8 +29,8 @@ class Photo
 
     if options[:with_info]
       #eager loading
-      info = FLICKR_API.photos.getInfo(photo_id:photo_id)
-      p.info = extract_info(info)
+      response = FLICKR_API.photos.getInfo(photo_id:photo_id)
+      p.info = extract_info(response)
     end
 
     if options[:with_urls]

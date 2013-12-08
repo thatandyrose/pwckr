@@ -25,7 +25,7 @@ describe 'photos' do
       expect(photo.id.to_s).not_to be_empty
       expect(photo.info.keys.length).to eq(4)
       expect(photo.info[:title]).to_not be_empty
-      expect(photo.info[:description]).to_not be_empty
+      expect(photo.info[:description]).to_not be_nil
     end
 
     it 'fills out tags' do

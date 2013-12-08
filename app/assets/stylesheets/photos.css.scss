@@ -18,7 +18,7 @@
     height: 150px;
     float:left;
     position:relative;
-    img{
+    img.photo-tumbnail{
       width:150px;
       height: 150px;
     }
@@ -27,6 +27,7 @@
   #selected-photo{
     width:auto;
     height:auto;
+    max-width: 100%; //seems to be a ff issue http://stackoverflow.com/questions/14718033/responsive-images-wont-scale-with-firefox-as-screen-size-is-adjusted-works-in
 
     .photo-info{
       color:#000000;  

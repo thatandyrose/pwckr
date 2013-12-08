@@ -8,7 +8,7 @@ class FlickrPhotoMock
   end
 
   def self.getInfo(o={})
-    all.select{|p|p.id == o[:photo_id]}.map{|p|
+    all.select{|p|p.id == o[:photo_id].to_i}.map{|p|
       {
         'title'=>p.title,
         'description'=>p.description,
@@ -22,7 +22,7 @@ class FlickrPhotoMock
   end
 
   def self.getSizes(o={})
-    all.select{|p|p.id == o[:photo_id]}.map{|p|
+    all.select{|p|p.id == o[:photo_id].to_i}.map{|p|
       p.sizes.map do |s|
         {
           'label'=>s[:label],
@@ -35,7 +35,7 @@ class FlickrPhotoMock
   
   def self.all
     if !@@all_photos.any?
-      @@all_photos = FactoryGirl.build_list(:flickr_photo_mock,50)
+      @@all_photos = FactoryGirl.build_list(:flickr_photo_mock,100)
     end
     @@all_photos
   end

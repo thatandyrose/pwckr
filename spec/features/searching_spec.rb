@@ -38,13 +38,12 @@ feature 'searching' do
     background do
       visit root_path
       fill_in 'query', with:'cat'
-      
+
       find('#search-submit').click
     end
 
     scenario 'Can see 20 loaded photos' do
       expect(page).to have_selector('.page-done')
-      binding.pry
       expect(all('.photo-box').length).to eq(21) #1 extra for the more button
     end
 
@@ -98,12 +97,40 @@ feature 'searching' do
       photo_id = photo_link.find('img')['data-id'].to_i
 
       photo_object = Photo.find(photo_id)
-
       photo_link.click
 
-      expect(page).to have_content(photo_object.title)
-      expect(page).to have_content(photo_object.tags.map{|t|"##{t}"}.join(" "))
-      expect(all('.photo-tag').length).to eq(photo_object.tags.length)
+      expect(page).to have_content(photo_object.info[:title])
+      expect(page).to have_content(photo_object.info[:tags].map{|t|"##{t}"}.join(" "))
+      expect(all('.photo-tag').length).to eq(photo_object.info[:tags].length)
+    end
+  end
+
+  feature 'As user I can search and get no results', js:true do
+    background do
+      visit root_path
+
+      fill_in 'query', with:'cat'
+    end
+
+    scenario 'can get no results at all' do
+      allow(FlickrPhotoMock).to receive(:all){[]}
+      
+      find('#search-submit').click
+
+      expect(page).to have_title("cat photos")
+      expect(page).to have_selector('.page-done')
+      expect(all('.photo-box').length).to eq(1) #1 extra for the more button
+    end
+
+    scenario 'can get no results on the subsequent page' do
+      allow(FlickrPhotoMock).to receive(:all){[FactoryGirl.build(:flickr_photo_mock,id:1)]}
+      find('#search-submit').click
+
+      expect(page).to have_selector('.page-done')
+      find('.load-more-container button').click
+      expect(page).to have_selector('.page-done')
+
+      expect(all('.photo-box').length).to eq(2) #1 extra for the more button
     end
   end
 end

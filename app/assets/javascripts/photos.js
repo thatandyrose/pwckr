@@ -35,8 +35,6 @@ var photoPager = (function(){
     statusEl = $('#sync-status');
     loadMoreEl = $('#load-more');
 
-    returnedCount = 0;
-
     attacheLoadMoreHandler();
   };
 
@@ -57,13 +55,16 @@ var photoPager = (function(){
     
     
     call_counter = 0;
+    returnedCount = 0;
+    
     getPhotos(page,batch_size);
       
   };
 
   var pageDone = function(){
     call_counter = 0;
-    
+    returnedCount = 0;
+
     var body = $('body');
     body.removeClass('page-loading');
     body.addClass('page-done');
@@ -72,17 +73,23 @@ var photoPager = (function(){
     loadMoreEl.fadeIn('slow');
   };
 
-  var getPhotos = function(page,_page_size){
+  var getPhotos = function(page,_batch_size){
+    if((returnedCount + _batch_size) > page_size){
+      _batch_size = page_size - returnedCount;
+    }
+    
     $.ajax({
       url:url,
-      data:{query:query,page:page,page_size:_page_size,do_search:'true'},
+      data:{query:query,page:page,page_size:_batch_size,do_search:'true'},
       success:function(ret){
         current_page = page;
         call_counter++;
+        returnedCount += _batch_size;
+
         if(call_counter >= calls){
           pageDone();
         }else{
-          getPhotos(current_page+1,batch_size);
+          getPhotos(current_page+1,_batch_size);
         }
       },
       error:function(err){

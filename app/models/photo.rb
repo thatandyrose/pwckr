@@ -29,23 +29,28 @@ class Photo
   def self.text_search(query,page = 1,page_size = 20) 
     ids = FLICKR_API.photos.search(tags:convert_query_to_tags(query),tag_mode:'all',page:page,per_page:page_size).map{|r|r['id']}
     
-    ids.map{|i| Photo.find(i,{with_info:false,with_urls:true})}
+    ids.map{|i| Photo.find(i,{with_info:false,with_urls:true})}.select{|p| p}
   end
 
   def self.find(photo_id,options = {with_info:true,with_urls:true})
     p = Photo.new
     p.id = photo_id.to_i
 
-    if options[:with_info]
-      #eager loading
-      response = FLICKR_API.photos.getInfo(photo_id:photo_id)
-      p.info = extract_info(response)
-    end
+    begin
+      if options[:with_info]
+        #eager loading
+        response = FLICKR_API.photos.getInfo(photo_id:photo_id)
+        p.info = extract_info(response)
+      end
 
-    if options[:with_urls]
-      #eager loading
-      sizes = FLICKR_API.photos.getSizes(photo_id:photo_id)
-      p.urls = extract_urls(sizes)
+      if options[:with_urls]
+        #eager loading
+        sizes = FLICKR_API.photos.getSizes(photo_id:photo_id)
+        p.urls = extract_urls(sizes)
+      end
+    rescue FlickRaw::FailedResponse => flickr_error
+      #putting this in place as flickr will return ids for members that are no longer active and later calls fail
+      p = nil
     end
 
     p

@@ -17,8 +17,17 @@ class Photo
     @urls
   end
 
+  def self.convert_query_to_tags(query)
+    query = query.gsub(',',' ')
+
+    query.to_s.split(' ')
+    .map{|s|s.strip}
+    .select{|s|s.present?}
+    .join(',')
+  end
+
   def self.text_search(query,page = 1,page_size = 20) 
-    ids = FLICKR_API.photos.search(text:query,page:page,per_page:page_size).map{|r|r['id']}
+    ids = FLICKR_API.photos.search(tags:convert_query_to_tags(query),tag_mode:'all',page:page,per_page:page_size).map{|r|r['id']}
     
     ids.map{|i| Photo.find(i,{with_info:false,with_urls:true})}
   end

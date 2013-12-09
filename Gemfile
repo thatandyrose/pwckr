@@ -15,6 +15,7 @@ gem 'pg'
 gem 'thin'
 gem 'flickraw'
 gem 'kaminari'
+gem 'honeybadger'
 
 group :development do
   gem 'hub', :require=>nil

@@ -1,0 +1,17 @@
+development:
+  adapter:  postgresql
+  host:     localhost
+  encoding: unicode
+  database: pwckr_development
+  pool:     5
+  username: postgres
+  password: 
+
+test:
+  adapter:  postgresql
+  host:     localhost
+  encoding: unicode
+  database: pwckr_test
+  pool:     5
+  username: postgres
+  password: 
